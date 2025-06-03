@@ -331,7 +331,7 @@ jobs:
       - name: Build YouMute
         if: ${{ inputs.enable_tweaks }}
         run: |
-          cd ${{ github.workspace }}/YouSlider
+          cd ${{ github.workspace }}/YouMute
           make clean package DEBUG=0 FINALPACKAGE=1
           mv packages/*.deb ${{ github.workspace }}/ymute.deb
         env:
