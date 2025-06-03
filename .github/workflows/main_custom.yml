@@ -1,4 +1,4 @@
-name: Create YouTube Plus app
+name: Create YouTube Plus app [Custom]
 
 on:
   workflow_dispatch:
@@ -34,8 +34,8 @@ on:
         required: true
         default: true
 
-      enable_ytab:
-        description: "Integrate YTABConfig"
+      enable_tweaks:
+        description: "Integrate all additional tweaks"
         type: boolean
         required: true
         default: true
@@ -224,7 +224,7 @@ jobs:
           git clone --quiet --depth=1 --recurse-submodules https://github.com/therealFoxster/DontEatMyContent.git
        
       - name: Clone YTABConfig
-        if: ${{ inputs.enable_ytab }}
+        if: ${{ inputs.enable_tweaks }}
         run: |
           cd ${{ github.workspace }}
           git clone --quiet --depth=1 https://github.com/PoomSmart/YTABConfig
@@ -294,7 +294,7 @@ jobs:
           THEOS: ${{ github.workspace }}/theos
 
       - name: Build YTABConfig
-        if: ${{ inputs.enable_yq }}
+        if: ${{ inputs.enable_tweaks }}
         run: |
           cd ${{ github.workspace }}/YTABConfig
           make clean package DEBUG=0 FINALPACKAGE=1
