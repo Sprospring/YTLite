@@ -239,7 +239,7 @@ jobs:
         if: ${{ inputs.enable_tweaks }}
         run: |
           cd ${{ github.workspace }}
-          git clone --quiet --depth=1 hhttps://github.com/atomikpanda/libcolorpicker
+          git clone --quiet --depth=1 https://github.com/atomikpanda/libcolorpicker
 
       - name: Clone YouMute
         if: ${{ inputs.enable_tweaks }}
