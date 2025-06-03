@@ -126,7 +126,7 @@ jobs:
         run: |
           git clone --quiet -n --depth=1 --filter=tree:0 https://github.com/theos/sdks/
           cd sdks
-          git sparse-checkout set --no-cone iPhoneOS16.5.sdk
+          git sparse-checkout set --no-cone iPhoneOS17.5.sdk
           git checkout
           mv *.sdk $THEOS/sdks
         env:
@@ -229,11 +229,11 @@ jobs:
           cd ${{ github.workspace }}
           git clone --quiet --depth=1 https://github.com/PoomSmart/YTABConfig
 
-      #- name: Clone YouSlider
-       # if: ${{ inputs.enable_tweaks }}
-        #run: |
-         # cd ${{ github.workspace }}
-          #git clone --quiet --depth=1 https://github.com/PoomSmart/YouSlider
+      - name: Clone YouSlider
+        if: ${{ inputs.enable_tweaks }}
+        run: |
+          cd ${{ github.workspace }}
+          git clone --quiet --depth=1 https://github.com/PoomSmart/YouSlider
 
       - name: Clone YouMute
         if: ${{ inputs.enable_tweaks }}
@@ -319,14 +319,14 @@ jobs:
         env:
           THEOS: ${{ github.workspace }}/theos
 
-      #- name: Build YouSlider
-       # if: ${{ inputs.enable_tweaks }}
-        #run: |
-         # cd ${{ github.workspace }}/YouSlider
-          #make clean package DEBUG=0 FINALPACKAGE=1
-          #mv packages/*.deb ${{ github.workspace }}/youslider.deb
-        #env:
-         # THEOS: ${{ github.workspace }}/theos
+      - name: Build YouSlider
+        if: ${{ inputs.enable_tweaks }}
+        run: |
+          cd ${{ github.workspace }}/YouSlider
+          make clean package DEBUG=0 FINALPACKAGE=1
+          mv packages/*.deb ${{ github.workspace }}/yslider.deb
+        env:
+          THEOS: ${{ github.workspace }}/theos
 
       - name: Build YouMute
         if: ${{ inputs.enable_tweaks }}
@@ -350,7 +350,7 @@ jobs:
         run: |
           tweaks="ytplus.deb OpenYoutubeSafariExtension.appex"
 
-          for deb in youpip.deb ytuhd.deb ryd.deb ygs.deb yq.deb ytvo.deb demc.deb ytab.deb ymute.deb ytvea.deb; do
+          for deb in youpip.deb ytuhd.deb ryd.deb ygs.deb yq.deb ytvo.deb demc.deb ytab.deb yslider.deb ymute.deb ytvea.deb; do
             if [ -f "$deb" ]; then
               tweaks="$tweaks $deb"
             fi
