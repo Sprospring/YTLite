@@ -235,6 +235,17 @@ jobs:
           cd ${{ github.workspace }}
           git clone --quiet --depth=1 https://github.com/PoomSmart/YouSlider
 
+      - name: Clone YouMute
+        if: ${{ inputs.enable_tweaks }}
+        run: |
+          cd ${{ github.workspace }}
+          git clone --quiet --depth=1 https://github.com/PoomSmart/YouMute
+
+      - name: Clone YTVideoErrorAlert
+        if: ${{ inputs.enable_tweaks }}
+        run: |
+          cd ${{ github.workspace }}
+          git clone --quiet --depth=1 https://github.com/PoomSmart/YTVideoErrorAlert
 
       - name: Build YouPiP
         if: ${{ inputs.enable_youpip }}
@@ -317,11 +328,29 @@ jobs:
         env:
           THEOS: ${{ github.workspace }}/theos
 
+      - name: Build YouMute
+        if: ${{ inputs.enable_tweaks }}
+        run: |
+          cd ${{ github.workspace }}/YouSlider
+          make clean package DEBUG=0 FINALPACKAGE=1
+          mv packages/*.deb ${{ github.workspace }}/ymute.deb
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
+      - name: Build YTVideoErrorAlert
+        if: ${{ inputs.enable_tweaks }}
+        run: |
+          cd ${{ github.workspace }}/YTVideoErrorAlert
+          make clean package DEBUG=0 FINALPACKAGE=1
+          mv packages/*.deb ${{ github.workspace }}/ytvea.deb
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
       - name: Inject tweaks into IPA
         run: |
           tweaks="ytplus.deb OpenYoutubeSafariExtension.appex"
 
-          for deb in youpip.deb ytuhd.deb ryd.deb ygs.deb yq.deb ytvo.deb demc.deb ytab.deb youslider.deb; do
+          for deb in youpip.deb ytuhd.deb ryd.deb ygs.deb yq.deb ytvo.deb demc.deb ytab.deb youslider.deb ymute.deb ytvea.deb; do
             if [ -f "$deb" ]; then
               tweaks="$tweaks $deb"
             fi
@@ -333,7 +362,7 @@ jobs:
         uses: softprops/action-gh-release@v2.0.1
         with:
           name: YouTubePlus v${{ inputs.tweak_version }} (${{ github.run_number }})
-          files: YouTubePlus_${{ inputs.tweak_version }}.ipa
+          files: YouTubePlusC_${{ inputs.tweak_version }}.ipa
           draft: true
 
       - name: Output Release URL
