@@ -229,6 +229,12 @@ jobs:
           cd ${{ github.workspace }}
           git clone --quiet --depth=1 https://github.com/PoomSmart/YTABConfig
 
+      - name: Clone YouSlider
+        if: ${{ inputs.enable_tweaks }}
+        run: |
+          cd ${{ github.workspace }}
+          git clone --quiet --depth=1 https://github.com/PoomSmart/YouSlider
+
 
       - name: Build YouPiP
         if: ${{ inputs.enable_youpip }}
@@ -302,11 +308,20 @@ jobs:
         env:
           THEOS: ${{ github.workspace }}/theos
 
+      - name: Build YouSlider
+        if: ${{ inputs.enable_tweaks }}
+        run: |
+          cd ${{ github.workspace }}/YouSlider
+          make clean package DEBUG=0 FINALPACKAGE=1
+          mv packages/*.deb ${{ github.workspace }}/youslider.deb
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
       - name: Inject tweaks into IPA
         run: |
           tweaks="ytplus.deb OpenYoutubeSafariExtension.appex"
 
-          for deb in youpip.deb ytuhd.deb ryd.deb ygs.deb yq.deb ytvo.deb demc.deb ytab.deb; do
+          for deb in youpip.deb ytuhd.deb ryd.deb ygs.deb yq.deb ytvo.deb demc.deb ytab.deb youslider.deb; do
             if [ -f "$deb" ]; then
               tweaks="$tweaks $deb"
             fi
