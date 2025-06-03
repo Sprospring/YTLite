@@ -319,14 +319,14 @@ jobs:
         env:
           THEOS: ${{ github.workspace }}/theos
 
-      - name: Build YouSlider
-        if: ${{ inputs.enable_tweaks }}
-        run: |
-          cd ${{ github.workspace }}/YouSlider
-          make clean package DEBUG=0 FINALPACKAGE=1
-          mv packages/*.deb ${{ github.workspace }}/yslider.deb
-        env:
-          THEOS: ${{ github.workspace }}/theos
+      #- name: Build YouSlider
+        #if: ${{ inputs.enable_tweaks }}
+        #run: |
+          #cd ${{ github.workspace }}/YouSlider
+          #make clean package DEBUG=0 FINALPACKAGE=1
+          #mv packages/*.deb ${{ github.workspace }}/yslider.deb
+        #env:
+          #THEOS: ${{ github.workspace }}/theos
 
       - name: Build YouMute
         if: ${{ inputs.enable_tweaks }}
