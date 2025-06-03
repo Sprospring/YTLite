@@ -235,6 +235,12 @@ jobs:
           cd ${{ github.workspace }}
           git clone --quiet --depth=1 https://github.com/PoomSmart/YouSlider
 
+      - name: Clone LibColorPicker
+        if: ${{ inputs.enable_tweaks }}
+        run: |
+          cd ${{ github.workspace }}
+          git clone --quiet --depth=1 hhttps://github.com/atomikpanda/libcolorpicker
+
       - name: Clone YouMute
         if: ${{ inputs.enable_tweaks }}
         run: |
@@ -246,6 +252,15 @@ jobs:
         run: |
           cd ${{ github.workspace }}
           git clone --quiet --depth=1 https://github.com/PoomSmart/YTVideoErrorAlert
+
+      - name: Build YouSlider
+        if: ${{ inputs.enable_tweaks }}
+        run: |
+          cd ${{ github.workspace }}/YouSlider
+          make clean package DEBUG=0 FINALPACKAGE=1
+          mv packages/*.deb ${{ github.workspace }}/yslider.deb
+        env:
+          THEOS: ${{ github.workspace }}/theos
 
       - name: Build YouPiP
         if: ${{ inputs.enable_youpip }}
@@ -319,14 +334,14 @@ jobs:
         env:
           THEOS: ${{ github.workspace }}/theos
 
-      #- name: Build YouSlider
-        #if: ${{ inputs.enable_tweaks }}
-        #run: |
-          #cd ${{ github.workspace }}/YouSlider
-          #make clean package DEBUG=0 FINALPACKAGE=1
-          #mv packages/*.deb ${{ github.workspace }}/yslider.deb
-        #env:
-          #THEOS: ${{ github.workspace }}/theos
+      - name: Build libcolorpicker
+        if: ${{ inputs.enable_tweaks }}
+        run: |
+          cd ${{ github.workspace }}/libcolorpicker
+          make clean package DEBUG=0 FINALPACKAGE=1
+          mv packages/*.deb ${{ github.workspace }}/color.deb
+        env:
+          THEOS: ${{ github.workspace }}/theos
 
       - name: Build YouMute
         if: ${{ inputs.enable_tweaks }}
@@ -350,7 +365,7 @@ jobs:
         run: |
           tweaks="ytplus.deb OpenYoutubeSafariExtension.appex"
 
-          for deb in youpip.deb ytuhd.deb ryd.deb ygs.deb yq.deb ytvo.deb demc.deb ytab.deb yslider.deb ymute.deb ytvea.deb; do
+          for deb in youpip.deb ytuhd.deb ryd.deb ygs.deb yq.deb ytvo.deb demc.deb ytab.deb yslider.deb ymute.deb color.deb yslider.deb ytvea.deb; do
             if [ -f "$deb" ]; then
               tweaks="$tweaks $deb"
             fi
