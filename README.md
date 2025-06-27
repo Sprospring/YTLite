@@ -125,8 +125,9 @@ Review by [@qbap](https://github.com/qbap) on ONE Jailbreak: https://onejailbrea
 </details>
 
 <details>
-  <summary>YTABConfig</summary>
-  <p>YTABConfig is a tweak developed by <a href="https://github.com/PoomSmart">PoomSmart</a> that allows users to configure A/B settings in iOS YouTube app.</p>
-  <p><strong>YTABConfig preferences</strong> are available in the <strong>YouTube settings</strong>.</p>
-  <p>Source code and additional information are available <a href="https://github.com/PoomSmart/YTABConfig">in PoomSmart's GitHub repository</a>.</p>
+  <summary>Plus More!</summary>
+  <p>Many more tweaks are included with the "Custom" Workflow file included in this fork. (This fork's only difference is this file; it took a lot of commits)</p>
+  <p>The Custom Workflow adds: <strong>YTABConfig, Gonerino, YouMute, and YTVideoErrorAlert.</strong></p>
+  <p>YTABConfig allows you to change YouTube's A/B (hidden) settings. Gonerino allows you to remove/block certain videos, creators or even keywords from search and your feed. YouMute adds a mute button to the player. YTVideoErrorAlert will give you a pop-up with more info if a video doesn't play. Search up these names with 'ios youtube tweak' to find the repo with some more instructions I'm too lazy to put them here right now. Be careful when changing A/B settings and check with posts online to see what the changes can do. (Some can break your app!!!)</p>
 </details>
+
