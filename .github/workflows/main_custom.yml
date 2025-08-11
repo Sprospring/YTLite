@@ -362,7 +362,7 @@ jobs:
 
           for f in *.deb; do
             if [ -f "$f" ]; then
-              tweaks="$tweaks $deb"
+              tweaks="$tweaks $f"
             fi
           done
 
