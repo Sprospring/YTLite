@@ -192,7 +192,7 @@ jobs:
           git clone --quiet --depth=1 https://github.com/PoomSmart/YouQuality.git
 
       - name: Clone YTVideoOverlay
-        if: ${{ iinputs.enable_tweaks }}
+        if: ${{ inputs.enable_tweaks }}
         run: |
           cd ${{ github.workspace }}
           git clone --quiet --depth=1 https://github.com/PoomSmart/YTVideoOverlay.git
