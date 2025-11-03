@@ -166,7 +166,7 @@ jobs:
           git clone --quiet --depth=1 https://github.com/PoomSmart/YouPiP.git
 
       - name: Clone YTUHD
-        if: ${{ inputs.enable_ytuhd }}
+        if: ${{ inputs.enable_tweaks }}
         uses: actions/checkout@v4.1.7
         with:
           repository: PoomSmart/YTUHD
