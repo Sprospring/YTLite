@@ -263,14 +263,14 @@ jobs:
         env:
           THEOS: ${{ github.workspace }}/theos
 
-      #- name: Build YouQuality
-        #if: ${{ inputs.enable_tweaks}
-        #run: |
-         # cd ${{ github.workspace }}/YouQuality
-         # make clean package DEBUG=0 FINALPACKAGE=1
-         # mv packages/*.deb ${{ github.workspace }}/yq.deb
-       # env:
-         # THEOS: ${{ github.workspace }}/theos
+      - name: Build YouQuality
+        if: ${{ inputs.enable_tweaks}
+        run: |
+          cd ${{ github.workspace }}/YouQuality
+          make clean package DEBUG=0 FINALPACKAGE=1
+          mv packages/*.deb ${{ github.workspace }}/yq.deb
+        env:
+          THEOS: ${{ github.workspace }}/theos
 
       - name: Build YTVideoOverlay
         if: ${{ inputs.enable_tweaks }}
