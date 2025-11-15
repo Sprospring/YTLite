@@ -1,4 +1,4 @@
-name: Create YouTube Plus app [Custom w/ full YTUHD]
+name: "Create YouTube Plus app [Custom w/ full YTUHD]"
 
 on:
   workflow_dispatch:
@@ -167,7 +167,7 @@ jobs:
 
       - name: Clone YTUHD
         if: ${{ inputs.enable_tweaks }}
-       run: |
+        run: |
           cd ${{ github.workspace }}
           git clone --quiet --depth=1 https://github.com/PoomSmart/YTUHD.git
 
