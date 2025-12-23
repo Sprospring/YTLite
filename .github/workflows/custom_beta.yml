@@ -377,9 +377,10 @@ jobs:
         with:
           tag_name: ytp-${{ github.run_number }}
           name: YouTubePlus ${{ env.YT_VERSION }} v${{ inputs.tweak_version }} (${{ github.run_number }}) 
-          files: YouTubePlus_${{ env.YT_VERSION }}_v${{ inputs.tweak_version }}.ipa          draft: true
+          files: YouTubePlus_${{ env.YT_VERSION }}_v${{ inputs.tweak_version }}.ipa         
+          draft: true
 
-      - - name: Job Summary - Build Complete
+      - name: Job Summary - Build Complete
         run: |
           echo -e '### 🛠️ Create YouTube Plus app Complete!' >> $GITHUB_STEP_SUMMARY
       - name: Job Summary - Output the Artifact Upload
