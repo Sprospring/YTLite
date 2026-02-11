@@ -86,7 +86,7 @@ jobs:
       - name: Install Dependencies
         run: brew install make ldid swiftlint
 
-      - name: Set PATH Environment Variable
+      - name: Set PATH Environment Variables
         run: |
           echo "$(brew --prefix make)/libexec/gnubin" >> $GITHUB_PATH
           echo "THEOS=${{ github.workspace }}/theos" >> $GITHUB_ENV
@@ -96,8 +96,8 @@ jobs:
            
       - name: Download iOS SDK
         run: |
-          git clone --quiet --depth=1 -n --filter=tree:0 https://github.com/Tonwalter888/iOS-18.6-SDK.git
-          cd iOS-18.6-SDK
+          git clone --quiet --depth=1 -n --filter=tree:0 https://github.com/Tonwalter888/iOS-SDKs.git
+          cd iOS-SDKs
           git sparse-checkout set --no-cone iPhoneOS18.6.sdk
           git checkout
           mv *.sdk $THEOS/sdks
@@ -121,14 +121,11 @@ jobs:
 
       - name: Clone YouTubeHeader
         run: |
-           cd $THEOS/include
-           git clone --quiet --depth=1 https://github.com/PoomSmart/YouTubeHeader.git
+           git clone --quiet --depth=1 https://github.com/PoomSmart/YouTubeHeader.git $THEOS/include/YouTubeHeader
            cp -r "$THEOS/include/YouTubeHeader" "$THEOS/include/YTHeaders"
 
       - name: Clone PSHeader
-        run: |
-           cd $THEOS/include
-           git clone --quiet --depth=1 https://github.com/PoomSmart/PSHeader.git
+        run: git clone --quiet --depth=1 https://github.com/PoomSmart/PSHeader.git $THEOS/include/PSHeader
 
       - name: Clone YouPiP
         run: git clone --quiet --depth=1 https://github.com/PoomSmart/YouPiP.git
@@ -140,7 +137,7 @@ jobs:
         run: git clone --quiet --depth=1 https://github.com/PoomSmart/Return-YouTube-Dislikes.git
 
       - name: Clone YouGroupSettings
-        run: git clone --quiet --depth=1 https://github.com/PoomSmart/YouGroupSettings.git
+        run: git clone --quiet --depth=1 https://github.com/Tonwalter888/YouGroupSettings.git
            
       - name: Clone YTVideoOverlay
         run: git clone --quiet --depth=1 https://github.com/PoomSmart/YTVideoOverlay.git
@@ -189,6 +186,9 @@ jobs:
 
       - name: Clone YouGetCaption
         run: git clone --quiet --depth=1 https://github.com/PoomSmart/YouGetCaption.git
+        
+      - name: Clone YTFlags
+        run: git clone --quiet --depth=1 https://github.com/Tonwalter888/YTFlags.git
         
       - name: Build YouPiP
         run: |
@@ -307,12 +307,18 @@ jobs:
       - name: Build YTweaks
         run: |
           cd YTweaks
-          make clean package DEBUG=0 FINALPACKAGE=1
+          make clean package DEBUG=0 FINALPACKAGE=1 ROOTLESS=1
           mv packages/*.deb ${{ github.workspace }}/ytweaks.deb
+
+      - name: Build YTFlags
+        run: |
+          cd YTFlags
+          make clean package DEBUG=0 FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
+          mv packages/*.deb ${{ github.workspace }}/ytflags.deb
           
       - name: Inject Tweaks Into IPA
         run: |
-          tweaks="ytlite.deb OpenYouTubeSafariExtension.appex"
+          tweaks="OpenYouTubeSafariExtension.appex"
 
           for f in *.deb; do
             if [ -f "$f" ]; then
@@ -348,7 +354,7 @@ jobs:
 
       - name: Job Summary - Build Conplete
         run: |
-          echo -e '### 🛠️ Build YTLitePlusEXTRA IPA Complete!' >> $GITHUB_STEP_SUMMARY
+          echo -e '###🛠️ Build YTLitePlusEXTRA IPA Complete!' >> $GITHUB_STEP_SUMMARY
 
       - name: Job Summary - Output the Artifact Upload
         if: ${{ inputs.upload_artifact }}
